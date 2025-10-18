@@ -1,4 +1,4 @@
-export const data = [
+export const TODDO_data = [
   { id: 1, title: 'Finish project proposal', completed: false },
   { id: 2, title: 'Review pull requests', completed: true },
   { id: 3, title: 'Plan team meeting agenda', completed: false },
