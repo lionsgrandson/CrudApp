@@ -55,7 +55,29 @@ export default function Index() {
         extraData={reRenderlist}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <Text style={styles.menuItemText}>{item.title}</Text>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                markedDone(
+                  TODDO_data.findIndex(
+                    (obj) => obj.title === item.title.toString()
+                  ),
+                  item.title.toString()
+                )
+
+                setSreRenderlist(!reRenderlist)
+              }}
+            >
+              <Entypo name='check' size={24} color='white' />
+            </Pressable>
+            <Text
+              style={[
+                styles.menuItemText,
+                item.completed ? styles.completed : null,
+              ]}
+            >
+              {item.title}
+            </Text>
             <Pressable
               style={styles.button}
               onPress={() => {
@@ -83,21 +105,6 @@ export default function Index() {
             >
               <Entypo name='trash' size={24} color='red' />
             </Pressable>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                markedDone(
-                  TODDO_data.findIndex(
-                    (obj) => obj.title === item.title.toString()
-                  ),
-                  item.title.toString()
-                )
-
-                setSreRenderlist(!reRenderlist)
-              }}
-            >
-              <Entypo name='check' size={24} color='white' />
-            </Pressable>
           </View>
         )}
       />
@@ -105,28 +112,29 @@ export default function Index() {
   )
 }
 function markedDone(id, title) {
+  TODDO_data[id].completed = !TODDO_data[id].completed
   Platform.OS === 'web'
     ? null
-    : ToastAndroid.show(`Marked '${title}' as done!`, ToastAndroid.SHORT)
-  deleteToDo(id)
-  // strigh line instead
+    : ToastAndroid.show(
+        `Marked '${title}' as ${
+          TODDO_data[id].completed === true ? 'Done!' : 'Undone'
+        }`,
+        ToastAndroid.SHORT
+      )
 }
 function createTODO(title) {
   const id = TODDO_data.length + 1
-  const completed = true
+  const completed = false
   const newTODO = { id, title, completed }
   console.log(newTODO)
 
-  // setListData(newTODO)
   return newTODO
 }
 function readTODO() {
   // save the list to a file first
 }
 function updateTODO(id, newText) {
-  // return (
   TODDO_data[id].title = newText
-  // )
 }
 function deleteToDo(id) {
   let newTODO = TODDO_data.splice(id, 1)
@@ -142,6 +150,12 @@ function createStyles(theme, colorSheme) {
       backgroundColor: theme.background,
       color: theme.text,
       borderColor: theme.text,
+    },
+    completed: {
+      textDecorationColor: 'red',
+      textDecorationLine: 'line-through',
+      textDecorationStyle: 'solid',
+      color: 'grey',
     },
     container: {
       flex: 1,
