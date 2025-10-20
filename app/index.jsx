@@ -75,16 +75,16 @@ export default function Index() {
                 setSreRenderlist(!reRenderlist)
               }}
             >
-              <Entypo name='check' size={24} color='white' />
+              <Text
+                style={[
+                  styles.menuItemText,
+                  item.completed ? styles.completed : null,
+                ]}
+              >
+                {item.title}
+              </Text>
             </Pressable>
-            <Text
-              style={[
-                styles.menuItemText,
-                item.completed ? styles.completed : null,
-              ]}
-            >
-              {item.title}
-            </Text>
+
             <Pressable
               style={styles.button}
               onPress={() => {
@@ -205,7 +205,7 @@ function createStyles(theme, colorSheme) {
       marginHorizontal: 'auto',
     },
     button: {
-      backgroundColor: 'red,',
+      color: theme.button,
     },
   })
 }
