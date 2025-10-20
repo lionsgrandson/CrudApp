@@ -9,6 +9,7 @@ import {
   ToastAndroid,
   Platform,
 } from 'react-native'
+import { Inter_500Medium, useFonts } from '@expo-google-fonts/inter'
 import React, { useState } from 'react'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -24,6 +25,12 @@ export default function Index() {
   const [reRenderlist, setSreRenderlist] = useState(false)
   const [text, onChangeText] = useState('Create a new todo')
   const [listData, setListData] = useState(TODDO_data)
+  const [loaded, error] = useFonts({
+    Inter_500Medium,
+  })
+  if (!loaded && !error) {
+    return null
+  }
   // const listData = TODDO_data
   return (
     <SafeAreaProvider style={styles.container}>
@@ -150,6 +157,7 @@ function createStyles(theme, colorSheme) {
       backgroundColor: theme.background,
       color: theme.text,
       borderColor: theme.text,
+      fontFamily: ' Inter_500Medium',
     },
     completed: {
       textDecorationColor: 'red',
@@ -177,6 +185,7 @@ function createStyles(theme, colorSheme) {
     footerComp: { marginHorizontal: 'auto', color: theme.text },
     menuItemText: {
       color: theme.text,
+      fontFamily: 'Inter_500Medium',
     },
     seperator: {
       height: 1,
